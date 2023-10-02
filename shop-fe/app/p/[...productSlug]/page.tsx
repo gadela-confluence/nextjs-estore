@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import productService, { Product } from '@/app/services/productService'
 
 
 interface Props {
@@ -9,23 +10,15 @@ interface Props {
 
 const ProductDetailsPage = async ( {params: {productSlug},searchParams: {sortOrder}}:Props) => {
 
-  console.log(productSlug);
-  const url =  `http://127.0.0.1:5001/occ/rest/v2/target/products/${productSlug}`;
+  const product = await productService.getProduct(productSlug[0]);
+  console.log(product.code)
+  console.log(product.name)
+  console.log(product.url)
 
-
-  try {
-		const { data } = await axios.get(url)
-    console.log(data);
-
-	} catch (error) { 
-    console.log(error)
-  }
-  
   return (
-    <div>ProductDetailsPage {productSlug}</div>
+    <div>{product.name}</div>
   )
 }
-
 
 
 export default ProductDetailsPage
